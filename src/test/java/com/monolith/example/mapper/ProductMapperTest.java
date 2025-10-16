@@ -1,8 +1,7 @@
-package com.monolith.example;
+package com.monolith.example.mapper;
 
 import com.monolith.example.dto.ProductDto;
 import com.monolith.example.dto.ProductResponseDto;
-import com.monolith.example.mapper.ProductMapper;
 import com.monolith.example.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
