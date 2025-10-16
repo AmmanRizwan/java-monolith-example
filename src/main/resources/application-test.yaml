@@ -9,4 +9,4 @@ spring:
     database: ${DB_TYPE}
 
   config:
-    import: optional:file:env.test[.properties]
+    import: optional:file:.env.test[.properties]
