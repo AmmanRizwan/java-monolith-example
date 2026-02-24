@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: java-monolith-example
+
+  config:
+    import: optional:file:.env[.properties]
