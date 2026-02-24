@@ -1,6 +1,6 @@
 # Environment variable files
 .env
-.env.*
+.env.test
 
 # Target Directory removal
 target/
