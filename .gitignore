@@ -2,3 +2,6 @@
 .env
 .env.*
 
+# Target Directory removal
+target/
+.idea/
