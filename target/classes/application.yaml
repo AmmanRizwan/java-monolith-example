@@ -2,5 +2,17 @@ spring:
   application:
     name: java-monolith-example
 
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_DDL}
+    database: ${DB_TYPE}
+    show-sql: true
+
   config:
     import: optional:file:.env[.properties]
