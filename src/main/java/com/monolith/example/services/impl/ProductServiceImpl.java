@@ -1,6 +1,6 @@
 package com.monolith.example.services.impl;
 
-import com.monolith.example.dto.ProductCreateDto;
+import com.monolith.example.dto.ProductDto;
 import com.monolith.example.dto.ProductResponseDto;
 import com.monolith.example.mapper.ProductMapper;
 import com.monolith.example.repository.ProductRepository;
@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public ProductResponseDto createProduct(ProductCreateDto dto) {
+    public ProductResponseDto createProduct(ProductDto dto) {
         var product = productMapper.toProduct(dto);
         var saveProduct = productRepository.save(product);
         return productMapper.toProductResponseDto(saveProduct);
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto updateProduct(ProductCreateDto dto, Long id) {
+    public ProductResponseDto updateProduct(ProductDto dto, Long id) {
         var product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cannot find product by id" + id));
 
         product.setName(dto.name() == null ? product.getName() : dto.name());

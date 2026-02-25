@@ -2,7 +2,7 @@ package com.monolith.example.dto;
 
 import java.math.BigDecimal;
 
-public record ProductCreateDto(
+public record ProductDto(
         String name,
         BigDecimal price,
         String description

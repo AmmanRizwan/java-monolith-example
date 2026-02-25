@@ -1,0 +1,16 @@
+package com.monolith.example.controller;
+
+import com.monolith.example.response.ApiResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HomeController {
+
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse<String>> homeRoute() {
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Server is running!", "OK"));
+    }
+}
