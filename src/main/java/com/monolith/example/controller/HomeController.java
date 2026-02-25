@@ -11,6 +11,8 @@ public class HomeController {
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<String>> homeRoute() {
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Server is running!", "OK"));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>("Server is running!", "OK"));
     }
 }

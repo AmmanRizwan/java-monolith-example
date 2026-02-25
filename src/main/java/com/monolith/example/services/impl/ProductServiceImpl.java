@@ -60,7 +60,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto updateProduct(ProductDto dto, Long id) {
-        var product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cannot find product by id" + id));
+        var product = productRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("cannot find product by id" + id)
+                );
+
+        product.setName(dto.name() == null ? product.getName() : dto.name());
+        product.setPrice(dto.price() == null ? product.getPrice() : dto.price());
+        product.setDescription(dto.description() == null ? product.getDescription() : dto.description());
+
+        var updateProduct = productRepository.save(product);
+
+        return productMapper.toProductResponseDto(updateProduct);
+    }
+
+    @Override
+    public ProductResponseDto updateProductByName(ProductDto dto, String name) {
+        var product = productRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("cannot find product by name: " + name)
+                );
 
         product.setName(dto.name() == null ? product.getName() : dto.name());
         product.setPrice(dto.price() == null ? product.getPrice() : dto.price());

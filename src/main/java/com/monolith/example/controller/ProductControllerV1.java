@@ -71,6 +71,17 @@ public class ProductControllerV1 {
                 .body(new ApiResponse<>("Product updated Successfully", null));
     }
 
+    @PutMapping("/name/{name}")
+    public ResponseEntity<ApiResponse<ProductResponseDto>> updateProductByName(
+            @RequestBody ProductDto dto,
+            @PathVariable("name") String name
+    ) {
+        productService.updateProductByName(dto, name);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>("Product updated Successfully", null));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductResponseDto>> deleteProduct(
             @PathVariable("id") Long id
