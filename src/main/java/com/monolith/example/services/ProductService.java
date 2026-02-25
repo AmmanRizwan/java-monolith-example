@@ -12,4 +12,5 @@ public interface ProductService {
     ProductResponseDto findProduct(Long id);
     ProductResponseDto updateProduct(ProductCreateDto dto, Long id);
     void deleteProduct(Long id);
+    void deleteProductByName(String name);
 }
