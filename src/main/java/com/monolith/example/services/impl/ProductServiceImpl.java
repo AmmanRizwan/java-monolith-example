@@ -99,6 +99,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductByName(String name) {
-        productRepository.deleteByName(name);
+        var product = productRepository
+                .findByName(name)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("cannot find the product by name: " + name));
+        productRepository.delete(product);
     }
 }

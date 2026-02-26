@@ -34,9 +34,10 @@ public class ProductRunnerComponent {
             ProductDto dto2 = new ProductDto("Phone", new BigDecimal("10.2"), "This is a simple phone");
             ProductDto dto3 = new ProductDto("Camera", new BigDecimal("2.2"), "This is a simple camera");
             ProductDto dto4 = new ProductDto("Tablet", new BigDecimal("10.2"), "This is a simple tablet");
+            ProductDto dto5 = new ProductDto("Cable", new BigDecimal("23.3"), "This is a simple cable");
 
             try {
-                List<ProductDto> dtos = new ArrayList<>(List.of(dto1, dto2, dto3, dto4));
+                List<ProductDto> dtos = new ArrayList<>(List.of(dto1, dto2, dto3, dto4, dto5));
                 List<Product> products = dtos.stream().map(mapper::toProduct).toList();
 
                 repository.saveAll(products);

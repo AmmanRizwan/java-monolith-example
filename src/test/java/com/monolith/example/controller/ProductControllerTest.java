@@ -78,7 +78,7 @@ public class ProductControllerTest {
 
         Assertions.assertEquals(response.getMessage(), "Products fetched Successfully");
         Assertions.assertNotEquals(response.getData().size(), 0);
-        Assertions.assertEquals(response.getData().size(), 5);
+        Assertions.assertEquals(response.getData().size(), 6);
     }
 
     @Test
@@ -149,22 +149,91 @@ public class ProductControllerTest {
 
     @Test
     public void shouldReturnUpdateProductByIdTest() throws Exception {
+        Long productId = 4L;
 
+        ProductDto updateProduct = new ProductDto(
+                "Samsung Tablet",
+                new BigDecimal("10.12"),
+                "This is a Samsung tablet");
+
+        MvcResult result = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put("/v1/api/product/{id}", productId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateProduct)))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.message")
+                        .value("Product updated Successfully"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        ApiResponse<ProductResponseDto> response = objectMapper.readValue(
+                result.getResponse().getContentAsString(),
+                new TypeReference<ApiResponse<ProductResponseDto>>() {}
+        );
+
+        Assertions.assertNotNull(response.getMessage());
+        Assertions.assertNull(response.getData());
+        Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
     }
 
     @Test
     public void shouldReturnUpdateProductByNameTest() throws Exception {
+        String productName = "Camera";
 
+        ProductDto updateProduct = new ProductDto(
+                "SONY Camera",
+                new BigDecimal("20.2"),
+                "This is an SONY Camera");
+
+        MvcResult result = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put("/v1/api/product/name/{name}", productName)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateProduct)))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.message")
+                        .value("Product updated Successfully"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        ApiResponse<ProductResponseDto> response = objectMapper.readValue(
+                result.getResponse().getContentAsString(),
+                new TypeReference<ApiResponse<ProductResponseDto>>() {}
+        );
+
+        Assertions.assertNotNull(response.getMessage());
+        Assertions.assertNull(response.getData());
+        Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
     }
 
     @Test
     public void shouldRemoveProductByIdTest() throws Exception {
+        Long productId = 3L;
 
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/v1/api/product/{id}", productId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.message")
+                        .value("Product deleted Successfully"))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk());
     }
 
     @Test
     public void shouldRemoveProductByNameTest() throws Exception {
+        String productName = "Cable";
 
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/v1/api/product/name/{name}", productName)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk())
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.message")
+                        .value("Product deleted Successfully"));
     }
-
 }
