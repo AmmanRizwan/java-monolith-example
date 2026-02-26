@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -19,6 +21,8 @@ import java.util.Optional;
 
 @SpringBootTest
 public class ProductServiceTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductServiceTest.class);
 
     @InjectMocks
     private ProductServiceImpl service;
@@ -79,6 +83,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(save);
+
+        logger.info("Unit Test: Create Product id={}, name{}", expected.id(), expected.name());
     }
 
     @Test
@@ -115,6 +121,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(ArgumentMatchers.any(Product.class));
+
+        logger.info("Unit Test: List Products: size={}", expected.size());
     }
 
     @Test
@@ -148,6 +156,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(product);
+
+        logger.info("Unit Test: Find Product By Name: name={}, id={}", expected.name(), expected.id());
     }
 
     @Test
@@ -183,6 +193,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(product);
+
+        logger.info("Unit Test: Error Find Product By Name");
     }
 
     @Test
@@ -216,6 +228,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(product);
+
+        logger.info("Unit Test: Find Product By Id: id={}, name={}", expected.id(), expected.name());
     }
 
     @Test
@@ -251,6 +265,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(product);
+
+        logger.info("Unit Test: Error Find Product By Id");
     }
 
     @Test
@@ -302,6 +318,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(updateProduct);
+
+        logger.info("Unit Test: Update Product By Id: id={}, name={}", expected.id(), expected.name());
     }
 
     @Test
@@ -348,6 +366,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(updateProduct);
+
+        logger.info("Unit Test: Error Update Product By Id");
     }
 
     @Test
@@ -399,6 +419,8 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toProductResponseDto(updateProduct);
+
+        logger.info("Unit Test: Update Product By Name: id={}, name={}", expected.id(), expected.name());
     }
 
     @Test
@@ -445,5 +467,7 @@ public class ProductServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(updateProduct);
+
+        logger.info("Unit Test: Error Update Product By Name");
     }
 }

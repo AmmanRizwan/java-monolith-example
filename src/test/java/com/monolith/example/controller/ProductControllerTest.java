@@ -8,6 +8,8 @@ import com.monolith.example.response.ApiResponse;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +26,8 @@ import java.util.List;
 @AutoConfigureMockMvc
 public class ProductControllerTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductControllerTest.class);
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,7 +41,7 @@ public class ProductControllerTest {
                 new BigDecimal("2.4"),
                 "This is a simple microwave");
 
-        mockMvc
+        MvcResult result = mockMvc
                 .perform(
                         MockMvcRequestBuilders
                                 .post("/v1/api/product")
@@ -55,7 +59,18 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.data.price")
                         .value(Matchers.any(Double.class)))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andReturn();
+
+        ApiResponse<ProductResponseDto> response = objectMapper.readValue(
+                result.getResponse().getContentAsString(), new TypeReference<ApiResponse<ProductResponseDto>>() {}
+        );
+
+        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(response.getData().id());
+        Assertions.assertEquals(response.getData().name(), "Microwave");
+
+        logger.info("Integration Test: Create Product: id={}, name={}", response.getData().id(), response.getData().name());
     }
 
     @Test
@@ -79,6 +94,8 @@ public class ProductControllerTest {
         Assertions.assertEquals(response.getMessage(), "Products fetched Successfully");
         Assertions.assertNotEquals(response.getData().size(), 0);
         Assertions.assertEquals(response.getData().size(), 6);
+
+        logger.info("Integration Test: List Products size={}", response.getData().size());
     }
 
     @Test
@@ -113,6 +130,8 @@ public class ProductControllerTest {
         Assertions.assertEquals(response.getData().id(), productId);
         Assertions.assertEquals(response.getData().name(), "Laptop");
         Assertions.assertNotNull(response.getData());
+
+        logger.info("Integration Test: Get Product By Id: id={}, name={}", response.getData().id(), response.getData().name());
     }
 
     @Test
@@ -145,6 +164,8 @@ public class ProductControllerTest {
         Assertions.assertEquals(response.getMessage(), "Product fetched Successfully");
         Assertions.assertEquals(response.getData().name(), productName);
         Assertions.assertEquals(response.getData().id(), 2L);
+
+        logger.info("Integration Test: Get Product By Name: id={}, name={}", response.getData().id(), response.getData().name());
     }
 
     @Test
@@ -175,6 +196,8 @@ public class ProductControllerTest {
         Assertions.assertNotNull(response.getMessage());
         Assertions.assertNull(response.getData());
         Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
+
+        logger.info("Integration Test: Update Product By Id: id={}, name={}", response.getData().id(), response.getData().name());
     }
 
     @Test
@@ -205,6 +228,8 @@ public class ProductControllerTest {
         Assertions.assertNotNull(response.getMessage());
         Assertions.assertNull(response.getData());
         Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
+
+        logger.info("Integration Test: Update Product By Name: id={}, name={}", response.getData().id(), response.getData().name());
     }
 
     @Test
@@ -220,6 +245,8 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .status()
                         .isOk());
+
+        logger.info("Integration Test: Delete Product By Id");
     }
 
     @Test
@@ -235,5 +262,7 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.message")
                         .value("Product deleted Successfully"));
+
+        logger.info("Integration Test: Delete Product By Name");
     }
 }

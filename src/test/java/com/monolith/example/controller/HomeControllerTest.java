@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monolith.example.response.ApiResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +19,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class HomeControllerTest {
+
+    private final static Logger logger = LoggerFactory.getLogger(HomeControllerTest.class);
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,5 +45,7 @@ public class HomeControllerTest {
 
         Assertions.assertEquals(response.getMessage(), "Server is running!");
         Assertions.assertEquals(response.getData(), "OK");
+
+        logger.info("Testing the Home Route. Data: {}", response.getData());
     }
 }

@@ -6,6 +6,8 @@ import com.monolith.example.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,6 +15,8 @@ import java.math.BigDecimal;
 
 @SpringBootTest
 public class ProductMapperTest {
+
+    private final static Logger logger = LoggerFactory.getLogger(ProductMapperTest.class);
 
     @Autowired
     private ProductMapper mapper;
@@ -39,6 +43,7 @@ public class ProductMapperTest {
         Assertions.assertEquals(response.price(), product.getPrice());
         Assertions.assertEquals(response.description(), product.getDescription());
 
+        logger.info("Unit Test: Product->ProductResponseDto: id={}", response.id());
     }
 
     @Test
@@ -58,6 +63,8 @@ public class ProductMapperTest {
                 NullPointerException.class,
                 () -> mapper.toProductResponseDto(null)
         );
+
+        logger.info("Unit Test: Product->Error");
     }
 
     @Test
@@ -76,6 +83,8 @@ public class ProductMapperTest {
         Assertions.assertNull(product.getId());
         Assertions.assertEquals(dto.price(), product.getPrice());
         Assertions.assertEquals(dto.description(), product.getDescription());
+
+        logger.info("Unit Test: ProductDto->Product: name={}", dto.name());
     }
 
     @Test
@@ -93,5 +102,7 @@ public class ProductMapperTest {
                 NullPointerException.class,
                 () -> mapper.toProduct(null)
         );
+
+        logger.info("Unit Test: ProductDto->Error");
     }
 }
