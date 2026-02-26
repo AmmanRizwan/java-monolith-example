@@ -197,7 +197,7 @@ public class ProductControllerTest {
         Assertions.assertNull(response.getData());
         Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
 
-        logger.info("Integration Test: Update Product By Id: id={}, name={}", response.getData().id(), response.getData().name());
+        logger.info("Integration Test: Update Product By Id");
     }
 
     @Test
@@ -229,7 +229,7 @@ public class ProductControllerTest {
         Assertions.assertNull(response.getData());
         Assertions.assertEquals(response.getMessage(), "Product updated Successfully");
 
-        logger.info("Integration Test: Update Product By Name: id={}, name={}", response.getData().id(), response.getData().name());
+        logger.info("Integration Test: Update Product By Name");
     }
 
     @Test
