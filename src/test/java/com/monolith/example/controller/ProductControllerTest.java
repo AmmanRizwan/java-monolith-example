@@ -54,7 +54,8 @@ public class ProductControllerTest {
                         .value("Microwave"))
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.data.price")
-                        .value(Matchers.any(Double.class)));
+                        .value(Matchers.any(Double.class)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
     @Test
@@ -67,6 +68,7 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.message")
                         .value("Products fetched Successfully"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         ApiResponse<List<ProductResponseDto>> response = objectMapper.readValue(
@@ -80,7 +82,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldReturnProductTest() throws Exception {
+    public void shouldReturnProductByIdTest() throws Exception {
         Long productId = 1L;
 
         MvcResult result = mockMvc
@@ -99,6 +101,7 @@ public class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .jsonPath("$.data.id")
                         .exists())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         ApiResponse<ProductResponseDto> response = objectMapper.readValue(
@@ -108,6 +111,60 @@ public class ProductControllerTest {
 
         Assertions.assertEquals(response.getMessage(), "Product fetched Successfully");
         Assertions.assertEquals(response.getData().id(), productId);
-        Assertions.assertEquals(response.getData(), "Laptop");
+        Assertions.assertEquals(response.getData().name(), "Laptop");
+        Assertions.assertNotNull(response.getData());
     }
+
+    @Test
+    public void shouldReturnProductByNameTest() throws Exception {
+        String productName = "Phone";
+
+        MvcResult result = mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/v1/api/product/name/{name}", productName)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.message")
+                        .value("Product fetched Successfully"))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.data.name")
+                        .value("Phone"))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.data.description")
+                        .value("This is a simple phone"))
+                .andExpect(MockMvcResultMatchers
+                        .jsonPath("$.data.id")
+                        .exists())
+                .andReturn();
+
+        ApiResponse<ProductResponseDto> response = objectMapper.readValue(
+                result.getResponse().getContentAsString(),
+                new TypeReference<ApiResponse<ProductResponseDto>>() {}
+        );
+
+        Assertions.assertEquals(response.getMessage(), "Product fetched Successfully");
+        Assertions.assertEquals(response.getData().name(), productName);
+        Assertions.assertEquals(response.getData().id(), 2L);
+    }
+
+    @Test
+    public void shouldReturnUpdateProductByIdTest() throws Exception {
+
+    }
+
+    @Test
+    public void shouldReturnUpdateProductByNameTest() throws Exception {
+
+    }
+
+    @Test
+    public void shouldRemoveProductByIdTest() throws Exception {
+
+    }
+
+    @Test
+    public void shouldRemoveProductByNameTest() throws Exception {
+
+    }
+
 }
