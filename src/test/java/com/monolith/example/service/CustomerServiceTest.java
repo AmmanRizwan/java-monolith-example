@@ -162,6 +162,8 @@ public class CustomerServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(1))
                 .toCustomerResponseDto(customer);
+
+        logger.info("Unit Test: Find Customer By Id: id={}, name={}", expected.id(), expected.name());
     }
 
     @Test
@@ -204,5 +206,313 @@ public class CustomerServiceTest {
         Mockito
                 .verify(mapper, Mockito.times(0))
                 .toCustomerResponseDto(customer);
+
+        logger.info("Unit Test: Error Find Customer By Id");
+    }
+
+    @Test
+    public void shouldReturnFindCustomerByEmailTest() {
+        String customerEmail = "amman@example.com";
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "Amman",
+                "amman@example.com",
+                "123456789");
+
+        Mockito.when(repository.findByEmail(customerEmail))
+                .thenReturn(Optional.of(customer));
+        Mockito.when(mapper.toCustomerResponseDto(customer))
+                .thenReturn(response);
+
+        CustomerResponseDto expected = service.findCustomerByEmail(customerEmail);
+
+        Assertions.assertNotNull(expected);
+        Assertions.assertEquals(expected.id(), 1L);
+        Assertions.assertEquals(expected.name(), "Amman");
+        Assertions.assertEquals(expected.email(), "amman@example.com");
+        Assertions.assertEquals(expected.phone(), "123456789");
+
+        Mockito
+                .verify(repository, Mockito.times(1))
+                .findByEmail(customerEmail);
+        Mockito
+                .verify(mapper, Mockito.times(1))
+                .toCustomerResponseDto(customer);
+
+        logger.info("Unit Test: Find Customer By Email: id={}, email={}", expected.id(), expected.email());
+    }
+
+    @Test
+    public void shouldThrowErrorFindCustomerByEmailTest() {
+        String customerEmail = "amman@example.com";
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "Amman",
+                "amman@example.com",
+                "123456789");
+
+        Mockito.when(repository.findByEmail(customerEmail))
+                .thenThrow(new IllegalArgumentException("cannot find customer by email: " + customerEmail));
+        Mockito.when(mapper.toCustomerResponseDto(customer))
+                .thenReturn(response);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> service.findCustomerByEmail(customerEmail));
+
+        try {
+            CustomerResponseDto expected = service.findCustomerByEmail(customerEmail);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find customer by email: amman@example.com");
+        }
+
+        Mockito
+                .verify(repository, Mockito.times(2))
+                .findByEmail(customerEmail);
+        Mockito
+                .verify(mapper, Mockito.times(0))
+                .toCustomerResponseDto(customer);
+
+        logger.info("Unit Test: Error Find Customer By Email");
+    }
+
+    @Test
+    public void shouldReturnUpdateCustomerByIdTest() {
+        Long customerId = 1L;
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerDto dto = new CustomerDto(
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123",
+                "ammanrizwan123@");
+
+        Customer update = new Customer();
+        update.setId(1L);
+        update.setName(dto.name());
+        update.setEmail(dto.email());
+        update.setPhone(dto.phone());
+        update.setPassword(dto.password());
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123");
+
+        Mockito.when(repository.findById(customerId))
+                .thenReturn(Optional.of(customer));
+        Mockito.when(repository.save(customer))
+                .thenReturn(update);
+        Mockito.when(mapper.toCustomerResponseDto(update))
+                .thenReturn(response);
+
+        CustomerResponseDto expected = service.updateCustomerById(dto, customerId);
+
+        Assertions.assertNotNull(expected);
+        Assertions.assertEquals(expected.id(), 1L);
+        Assertions.assertEquals(expected.name(), "AmmanRizwan");
+        Assertions.assertEquals(expected.email(), "ammanrizwan@example.com");
+        Assertions.assertEquals(expected.phone(), "789456123");
+
+        Mockito.verify(repository, Mockito.times(1))
+                .findById(customerId);
+        Mockito.verify(repository, Mockito.times(1))
+                .save(customer);
+        Mockito.verify(mapper, Mockito.times(1))
+                .toCustomerResponseDto(update);
+
+        logger.info("Unit Test: Update Customer By Id: id={}, name={}", expected.id(), expected.name());
+    }
+
+    @Test
+    public void shouldThrowErrorUpdateCustomerByIdTest() {
+        Long customerId = 1L;
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerDto dto = new CustomerDto(
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123",
+                "ammanrizwan123@");
+
+        Customer update = new Customer();
+        update.setId(1L);
+        update.setName(dto.name());
+        update.setEmail(dto.email());
+        update.setPhone(dto.phone());
+        update.setPassword(dto.password());
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123");
+
+        Mockito.when(repository.findById(customerId))
+                .thenThrow(new IllegalArgumentException("cannot find customer by id: " + customerId));
+        Mockito.when(repository.save(customer))
+                .thenReturn(update);
+        Mockito.when(mapper.toCustomerResponseDto(update))
+                .thenReturn(response);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> service.updateCustomerById(dto, customerId));
+
+        try {
+            CustomerResponseDto expected = service.updateCustomerById(dto, customerId);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find customer by id: 1");
+        }
+
+        Mockito.verify(repository, Mockito.times(2))
+                .findById(customerId);
+        Mockito.verify(repository, Mockito.times(0))
+                .save(customer);
+        Mockito.verify(mapper, Mockito.times(0))
+                .toCustomerResponseDto(update);
+
+        logger.info("Unit Test: Error Update Customer By Id");
+    }
+
+    @Test
+    public void shouldReturnUpdateCustomerByEmailTest() {
+        String customerEmail = "amman@example.com";
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerDto dto = new CustomerDto(
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123",
+                "ammanrizwan123@");
+
+        Customer update = new Customer();
+        update.setId(1L);
+        update.setName(dto.name());
+        update.setEmail(dto.email());
+        update.setPhone(dto.phone());
+        update.setPassword(dto.password());
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123");
+
+        Mockito.when(repository.findByEmail(customerEmail))
+                .thenReturn(Optional.of(customer));
+        Mockito.when(repository.save(customer))
+                .thenReturn(update);
+        Mockito.when(mapper.toCustomerResponseDto(update))
+                .thenReturn(response);
+
+        CustomerResponseDto expected = service.updateCustomerByEmail(dto, customerEmail);
+
+        Assertions.assertNotNull(expected);
+        Assertions.assertEquals(expected.id(), 1L);
+        Assertions.assertEquals(expected.name(), "AmmanRizwan");
+        Assertions.assertEquals(expected.email(), "ammanrizwan@example.com");
+        Assertions.assertEquals(expected.phone(), "789456123");
+
+        Mockito.verify(repository, Mockito.times(1))
+                .findByEmail(customerEmail);
+        Mockito.verify(repository, Mockito.times(1))
+                .save(customer);
+        Mockito.verify(mapper, Mockito.times(1))
+                .toCustomerResponseDto(update);
+
+        logger.info("Unit Test: Update Customer By Email: id={}, email={}", expected.id(), expected.email());
+    }
+
+    @Test
+    public void shouldThrowErrorUpdateCustomerByEmailTest() {
+        String customerEmail = "amman@example.com";
+
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setName("Amman");
+        customer.setEmail("amman@example.com");
+        customer.setPhone("123456789");
+        customer.setPassword("amman123@");
+
+        CustomerDto dto = new CustomerDto(
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123",
+                "ammanrizwan123@");
+
+        Customer update = new Customer();
+        update.setId(1L);
+        update.setName(dto.name());
+        update.setEmail(dto.email());
+        update.setPhone(dto.phone());
+        update.setPassword(dto.password());
+
+        CustomerResponseDto response = new CustomerResponseDto(
+                1L,
+                "AmmanRizwan",
+                "ammanrizwan@example.com",
+                "789456123");
+
+        Mockito.when(repository.findByEmail(customerEmail))
+                .thenThrow(new IllegalArgumentException("cannot find customer by id: " + customerEmail));
+        Mockito.when(repository.save(customer))
+                .thenReturn(update);
+        Mockito.when(mapper.toCustomerResponseDto(update))
+                .thenReturn(response);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> service.updateCustomerByEmail(dto, customerEmail));
+
+        try {
+            CustomerResponseDto expected = service.updateCustomerByEmail(dto, customerEmail);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find customer by id: amman@example.com");
+        }
+
+        Mockito.verify(repository, Mockito.times(2))
+                .findByEmail(customerEmail);
+        Mockito.verify(repository, Mockito.times(0))
+                .save(customer);
+        Mockito.verify(mapper, Mockito.times(0))
+                .toCustomerResponseDto(update);
+
+        logger.info("Unit Test: Error Update Customer By Email");
     }
 }
