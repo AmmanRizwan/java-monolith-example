@@ -187,8 +187,15 @@ public class ProductServiceTest {
                 IllegalArgumentException.class,
                 () -> service.findProductByName(productName));
 
+        try {
+            ProductResponseDto expected = service.findProductByName(productName);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find product by name: Microwave");
+        }
+
         Mockito
-                .verify(repository, Mockito.times(1))
+                .verify(repository, Mockito.times(2))
                 .findByName(productName);
         Mockito
                 .verify(mapper, Mockito.times(0))
@@ -259,8 +266,15 @@ public class ProductServiceTest {
                 IllegalArgumentException.class,
                 () -> service.findProduct(productId));
 
+        try {
+            ProductResponseDto expected = service.findProduct(productId);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find product by id: 2");
+        }
+
         Mockito
-                .verify(repository, Mockito.times(1))
+                .verify(repository, Mockito.times(2))
                 .findById(productId);
         Mockito
                 .verify(mapper, Mockito.times(0))
@@ -357,8 +371,15 @@ public class ProductServiceTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.updateProduct(dto, productId));
 
+        try {
+            ProductResponseDto expected = service.updateProduct(dto, productId);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find product by id: 1");
+        }
+
         Mockito
-                .verify(repository, Mockito.times(1))
+                .verify(repository, Mockito.times(2))
                 .findById(productId);
         Mockito
                 .verify(repository, Mockito.times(0))
@@ -458,8 +479,15 @@ public class ProductServiceTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> service.updateProductByName(dto, productName));
 
+        try {
+            ProductResponseDto expected = service.updateProductByName(dto, productName);
+        }
+        catch (IllegalArgumentException e) {
+            Assertions.assertEquals(e.getMessage(), "cannot find product by name: Camera");
+        }
+
         Mockito
-                .verify(repository, Mockito.times(1))
+                .verify(repository, Mockito.times(2))
                 .findByName(productName);
         Mockito
                 .verify(repository, Mockito.times(0))
