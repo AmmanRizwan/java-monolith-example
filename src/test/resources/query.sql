@@ -1,0 +1,8 @@
+-- CREATE A SQL TABLE
+CREATE TABLE custom_table (id PRIMARY KEY, name VARCHAR(50));
+
+-- INSERT RANDOM DATA INSIDE THE TABLE
+INSERT INTO custom_table (name) VALUES ("Amman");
+
+-- SELECT THE FIRST ROW
+SELECT name FROM custom_table WHERE id = 1;

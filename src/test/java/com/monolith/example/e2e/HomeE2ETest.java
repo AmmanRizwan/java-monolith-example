@@ -18,11 +18,9 @@ public class HomeE2ETest {
     private int port;
 
     @Container
-    private static PostgreSQLContainer<?> postgres =
+    private static final PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:14")
-                    .withDatabaseName("test")
-                    .withUsername("admin")
-                    .withPassword("password");
+                    .withInitScript("query.sql");
 
     @Test
     public void testConnection() {
