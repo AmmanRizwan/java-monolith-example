@@ -324,7 +324,7 @@ public class CustomerServiceTest {
 
         Mockito.when(repository.findById(customerId))
                 .thenReturn(Optional.of(customer));
-        Mockito.when(repository.save(customer))
+        Mockito.when(repository.save(ArgumentMatchers.any(Customer.class)))
                 .thenReturn(update);
         Mockito.when(mapper.toCustomerResponseDto(update))
                 .thenReturn(response);
