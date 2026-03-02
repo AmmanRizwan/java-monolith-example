@@ -1,10 +1,24 @@
 ## Java Monolith Example
 
-### Introduction
+## About The Project
 
 - *Remember this project is not vibe coded. Each line of code is write by a human.*
 
-### Installation
+### Built With
+
+* [![Java][Java-badge]][Java-url]
+*  [![Maven][Maven-badge]][Maven-url]
+*  [![Spring Boot][Spring-badge]][Spring-url]
+
+<!-- MARKDOWN LINK & IMAGES -->
+[Java-badge]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
+[Java-url]: https://www.oracle.com/java/
+[Maven-badge]: https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white
+[Maven-url]: https://maven.apache.org/
+[Spring-badge]: https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white
+[Spring-url]: https://spring.io/projects/spring-boot
+
+## Getting Started
 
 To install this project, you will need to have Java 17 or latest version installed on your machine. You can download it from the official website.
 
