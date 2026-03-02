@@ -101,3 +101,80 @@ mvn spring-boot:run
 # The project will used the application-test.yml file
 ./mvnw test -D --spring.profiles.active=test
 ```
+
+### Directory Tree
+
+```bash
+.
+├── HELP.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── monolith
+    │   │           └── example
+    │   │               ├── controller
+    │   │               │   ├── AuthController.java
+    │   │               │   ├── CustomerController.java
+    │   │               │   ├── HomeController.java
+    │   │               │   └── ProductController.java
+    │   │               ├── dto
+    │   │               │   ├── CustomerDto.java
+    │   │               │   ├── CustomerResponseDto.java
+    │   │               │   ├── LoginDto.java
+    │   │               │   ├── ProductDto.java
+    │   │               │   ├── ProductResponseDto.java
+    │   │               │   └── SignUpDto.java
+    │   │               ├── ExampleApplication.java
+    │   │               ├── mapper
+    │   │               │   ├── CustomerMapper.java
+    │   │               │   └── ProductMapper.java
+    │   │               ├── model
+    │   │               │   ├── Customer.java
+    │   │               │   └── Product.java
+    │   │               ├── repository
+    │   │               │   ├── CustomerRepository.java
+    │   │               │   └── ProductRepository.java
+    │   │               ├── response
+    │   │               │   └── ApiResponse.java
+    │   │               ├── runner
+    │   │               │   └── RunnerComponent.java
+    │   │               └── services
+    │   │                   ├── AuthService.java
+    │   │                   ├── CustomerService.java
+    │   │                   ├── impl
+    │   │                   │   ├── AuthServiceImpl.java
+    │   │                   │   ├── CustomerServiceImpl.java
+    │   │                   │   └── ProductServiceImpl.java
+    │   │                   └── ProductService.java
+    │   └── resources
+    │       ├── application-test.yaml
+    │       ├── application.yaml
+    │       ├── static
+    │       └── templates
+    └── test
+        ├── java
+        │   └── com
+        │       └── monolith
+        │           └── example
+        │               ├── controller
+        │               │   ├── CustomerControllerTest.java
+        │               │   ├── HomeControllerTest.java
+        │               │   └── ProductControllerTest.java
+        │               ├── e2e
+        │               │   └── ConnectionE2ETest.java
+        │               ├── ExampleApplicationTests.java
+        │               ├── mapper
+        │               │   ├── CustomerMapperTest.java
+        │               │   └── ProductMapperTest.java
+        │               └── service
+        │                   ├── AuthServiceTest.java
+        │                   ├── CustomerServiceTest.java
+        │                   └── ProductServiceTest.java
+        └── resources
+            └── query.sql
+```
