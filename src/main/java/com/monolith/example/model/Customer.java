@@ -1,8 +1,14 @@
 package com.monolith.example.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +21,10 @@ public class Customer {
     private String phone;
     @Column(nullable = false)
     private String password;
+    @CreatedDate
+    private Date createdAt;
+    @LastModifiedDate
+    private Date updatedAt;
 
     public Long getId() {
         return id;
@@ -36,6 +46,14 @@ public class Customer {
         return password;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -54,5 +72,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

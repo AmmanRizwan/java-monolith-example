@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.Instant;
 
 @SpringBootTest
 public class ProductMapperTest {
@@ -33,6 +35,8 @@ public class ProductMapperTest {
         product.setName("Laptop");
         product.setPrice(new BigDecimal("10.20"));
         product.setDescription("This is a simple Laptop");
+        product.setCreatedAt(Date.from(Instant.now()));
+        product.setUpdatedAt(Date.from(Instant.now()));
 
         ProductResponseDto response = mapper.toProductResponseDto(product);
 
@@ -42,6 +46,8 @@ public class ProductMapperTest {
         Assertions.assertEquals(response.name(), product.getName());
         Assertions.assertEquals(response.price(), product.getPrice());
         Assertions.assertEquals(response.description(), product.getDescription());
+        Assertions.assertNotNull(response.createdAt());
+        Assertions.assertNotNull(response.updatedAt());
 
         logger.info("Unit Test: Product->ProductResponseDto: id={}", response.id());
     }
@@ -64,7 +70,7 @@ public class ProductMapperTest {
                 () -> mapper.toProductResponseDto(null)
         );
 
-        logger.info("Unit Test: Product->Error");
+        logger.warn("Unit Test: Product->Error");
     }
 
     @Test
@@ -103,6 +109,6 @@ public class ProductMapperTest {
                 () -> mapper.toProduct(null)
         );
 
-        logger.info("Unit Test: ProductDto->Error");
+        logger.warn("Unit Test: ProductDto->Error");
     }
 }

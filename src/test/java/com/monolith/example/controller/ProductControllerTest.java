@@ -69,6 +69,8 @@ public class ProductControllerTest {
         Assertions.assertNotNull(response);
         Assertions.assertNotNull(response.getData().id());
         Assertions.assertEquals(response.getData().name(), "Microwave");
+        Assertions.assertNotNull(response.getData().createdAt());
+        Assertions.assertNotNull(response.getData().updatedAt());
 
         logger.info("Integration Test: Create Product: id={}, name={}", response.getData().id(), response.getData().name());
     }
@@ -130,6 +132,8 @@ public class ProductControllerTest {
         Assertions.assertEquals(response.getData().id(), productId);
         Assertions.assertEquals(response.getData().name(), "Laptop");
         Assertions.assertNotNull(response.getData());
+        Assertions.assertNotNull(response.getData().createdAt());
+        Assertions.assertNotNull(response.getData().updatedAt());
 
         logger.info("Integration Test: Get Product By Id: id={}, name={}", response.getData().id(), response.getData().name());
     }
@@ -164,6 +168,8 @@ public class ProductControllerTest {
         Assertions.assertEquals(response.getMessage(), "Product fetched Successfully");
         Assertions.assertEquals(response.getData().name(), productName);
         Assertions.assertEquals(response.getData().id(), 2L);
+        Assertions.assertNotNull(response.getData().createdAt());
+        Assertions.assertNotNull(response.getData().updatedAt());
 
         logger.info("Integration Test: Get Product By Name: id={}, name={}", response.getData().id(), response.getData().name());
     }

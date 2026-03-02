@@ -1,1 +1,103 @@
 ## Java Monolith Example
+
+### Introduction
+
+- *Remember this project is not vibe coded. Each line of code is write by a human.*
+
+### Installation
+
+To install this project, you will need to have Java 17 or latest version installed on your machine. You can download it from the official website.
+
+Once you have Java 17 installed, you can use to 
+
+### Setup
+
+This project was created by Amman Rizwan and is available on GitHub. If you're interested in contributing to this project, please follow these guidelines and best practices.
+
+### Prerequisites
+
+- **Java 17**
+  ```bash
+  sudo apt update
+  sudo apt upgrade
+  sudo apt install java
+  javac --version
+  java --version
+  ```
+
+- **Maven (Optional)**
+  ```bash
+  sudo apt update
+  sudo apt install maven
+  
+  mvn --version
+  ```
+- **Git**
+  ```bash
+  sudo apt update
+  sudo apt install git
+  
+  git --version
+  ```
+
+### Configure Project
+
+The project is designed to be flexible and customizable. You can modify the `src` folder to include new files or modify existing ones to suit your needs.
+
+To configure the project, you will need to create the `.env` and `.env.test` file located in the root directory.
+
+*.env file*
+```.env
+DB_URL=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DRIVER=
+DB_DDL=
+DB_TYPE=
+```
+
+*.env.test file*
+
+```.env
+DB_URL=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DRIVER=
+DB_TYPE=
+```
+### Run Application
+
+#### Without Containerize the Application
+
+```bash
+# If maven install in your local machine
+# Clean the project
+mvn clean
+
+# Build the project
+mvn package
+
+# Run the application
+mvn spring-boot:run
+```
+
+```bash
+# If not maven install in your local machine
+# Clean the project
+./mvnw clean
+
+# Build the project
+./mvnw package
+
+# Run the application
+./mvnw spring-boot:run
+```
+
+#### With Containerize the Application
+
+### Run Test
+
+```bash
+# The project will used the application-test.yml file
+./mvnw test -D --spring.profiles.active=test
+```

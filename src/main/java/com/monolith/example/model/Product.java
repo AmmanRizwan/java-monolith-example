@@ -1,10 +1,15 @@
 package com.monolith.example.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +20,10 @@ public class Product {
     private BigDecimal price;
     @Column(nullable = false)
     private String description;
+    @CreatedDate
+    private Date createdAt;
+    @LastModifiedDate
+    private Date updatedAt;
 
     public Long getId() {
         return id;
@@ -32,6 +41,14 @@ public class Product {
         return description;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -46,5 +63,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

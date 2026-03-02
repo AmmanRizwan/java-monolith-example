@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
+import java.time.Instant;
+
 @SpringBootTest
 public class CustomerMapperTest {
 
@@ -60,7 +63,7 @@ public class CustomerMapperTest {
         Assertions.assertNull(expected.getPhone());
         Assertions.assertNull(expected.getPassword());
 
-        logger.info("Unit Test: CustomerDto->Null");
+        logger.warn("Unit Test: CustomerDto->Null");
     }
     
     @Test
@@ -98,7 +101,7 @@ public class CustomerMapperTest {
         Assertions.assertNull(expected.getPhone());
         Assertions.assertNull(expected.getPassword());
 
-        logger.info("Unit Test: SignUpDto->Null");
+        logger.warn("Unit Test: SignUpDto->Null");
     }
 
     @Test
@@ -113,7 +116,7 @@ public class CustomerMapperTest {
         Assertions.assertNull(expected.email());
         Assertions.assertNull(expected.phone());
 
-        logger.info("Unit Test: Customer->Null");
+        logger.warn("Unit Test: Customer->Null");
     }
 
     @Test
@@ -124,6 +127,8 @@ public class CustomerMapperTest {
         customer.setEmail("amman@example.com");
         customer.setPhone("123456789");
         customer.setPassword("*****");
+        customer.setCreatedAt(Date.from(Instant.now()));
+        customer.setUpdatedAt(Date.from(Instant.now()));
 
         CustomerResponseDto expected = mapper.toCustomerResponseDto(customer);
 
@@ -132,6 +137,8 @@ public class CustomerMapperTest {
         Assertions.assertEquals(expected.name(), customer.getName());
         Assertions.assertEquals(expected.email(), customer.getEmail());
         Assertions.assertEquals(expected.phone(), customer.getPhone());
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         logger.info("Unit Test: Customer->CustomerResponseDto: id={}", customer.getId());
     }

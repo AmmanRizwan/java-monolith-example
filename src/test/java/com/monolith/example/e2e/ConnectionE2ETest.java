@@ -51,6 +51,5 @@ public class ConnectionE2ETest {
             System.out.println("Connection Error: " + e.getMessage());
         }
 
-
     }
 }

@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,12 +56,17 @@ public class ProductServiceTest {
         save.setName("Phone");
         save.setPrice(new BigDecimal("2.0"));
         save.setDescription("This is a simple phone.");
+        save.setCreatedAt(Date.from(Instant.now()));
+        save.setUpdatedAt(Date.from(Instant.now()));
 
         ProductResponseDto response = new ProductResponseDto(
                 save.getId(),
                 save.getName(),
                 save.getPrice(),
-                save.getDescription());
+                save.getDescription(),
+                save.getCreatedAt(),
+                save.getUpdatedAt()
+                );
 
         Mockito.when(mapper.toProduct(dto)).thenReturn(product);
         Mockito.when(repository.save(product)).thenReturn(save);
@@ -73,6 +80,8 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected.price(), new BigDecimal("2.0"));
         Assertions.assertNotEquals(expected.price(), 2.0);
         Assertions.assertEquals(expected.description(), "This is a simple phone.");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(mapper, Mockito.times(1))
@@ -95,6 +104,8 @@ public class ProductServiceTest {
         product.setName("Microwave");
         product.setPrice(new BigDecimal("2.3"));
         product.setDescription("This is a microwave");
+        product.setCreatedAt(Date.from(Instant.now()));
+        product.setUpdatedAt(Date.from(Instant.now()));
 
         products.add(product);
 
@@ -102,7 +113,10 @@ public class ProductServiceTest {
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getDescription());
+                product.getDescription(),
+                product.getCreatedAt(),
+                product.getUpdatedAt()
+                );
 
         Mockito
                 .when(repository.findAll())
@@ -138,7 +152,10 @@ public class ProductServiceTest {
                 1L,
                 "Phone",
                 new BigDecimal("2.3"),
-                "This is a phone");
+                "This is a phone",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findByName(productName)).thenReturn(Optional.of(product));
         Mockito.when(mapper.toProductResponseDto(product)).thenReturn(response);
@@ -149,6 +166,8 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected.name(), "Phone");
         Assertions.assertEquals(expected.price(), new BigDecimal("2.3"));
         Assertions.assertEquals(expected.description(), "This is a phone");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -173,7 +192,10 @@ public class ProductServiceTest {
                 1L,
                 "Phone",
                 new BigDecimal("2.3"),
-                "This is a phone");
+                "This is a phone",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito
                 .when(repository.findByName(productName))
@@ -201,7 +223,7 @@ public class ProductServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(product);
 
-        logger.info("Unit Test: Error Find Product By Name");
+        logger.warn("Unit Test: Error Find Product By Name");
     }
 
     @Test
@@ -217,7 +239,10 @@ public class ProductServiceTest {
                 1L,
                 "Phone",
                 new BigDecimal("2.3"),
-                "This is a phone");
+                "This is a phone",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findById(productId)).thenReturn(Optional.of(product));
         Mockito.when(mapper.toProductResponseDto(product)).thenReturn(response);
@@ -228,6 +253,8 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected.name(), "Phone");
         Assertions.assertEquals(expected.price(), new BigDecimal("2.3"));
         Assertions.assertEquals(expected.description(), "This is a phone");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -252,7 +279,10 @@ public class ProductServiceTest {
                 1L,
                 "Phone",
                 new BigDecimal("2.3"),
-                "This is a phone");
+                "This is a phone",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito
                 .when(repository.findById(productId))
@@ -280,7 +310,7 @@ public class ProductServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(product);
 
-        logger.info("Unit Test: Error Find Product By Id");
+        logger.warn("Unit Test: Error Find Product By Id");
     }
 
     @Test
@@ -303,6 +333,8 @@ public class ProductServiceTest {
         updateProduct.setName(dto.name());
         updateProduct.setDescription(dto.description());
         updateProduct.setPrice(dto.price());
+        updateProduct.setCreatedAt(Date.from(Instant.now()));
+        updateProduct.setUpdatedAt(Date.from(Instant.now()));
 
         Mockito.when(repository.findById(productId)).thenReturn(Optional.of(product));
         Mockito.when(repository.save(product)).thenReturn(updateProduct);
@@ -311,7 +343,9 @@ public class ProductServiceTest {
                         updateProduct.getId(),
                         updateProduct.getName(),
                         updateProduct.getPrice(),
-                        updateProduct.getDescription()
+                        updateProduct.getDescription(),
+                        updateProduct.getCreatedAt(),
+                        updateProduct.getUpdatedAt()
                 )
         );
 
@@ -322,6 +356,8 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected.id(), updateProduct.getId());
         Assertions.assertEquals(expected.description(), updateProduct.getDescription());
         Assertions.assertEquals(expected.price(), updateProduct.getPrice());
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -356,6 +392,8 @@ public class ProductServiceTest {
         updateProduct.setName(dto.name());
         updateProduct.setDescription(dto.description());
         updateProduct.setPrice(dto.price());
+        updateProduct.setCreatedAt(Date.from(Instant.now()));
+        updateProduct.setUpdatedAt(Date.from(Instant.now()));
 
         Mockito.when(repository.findById(productId))
                 .thenThrow(new IllegalArgumentException("cannot find product by id: " + productId));
@@ -365,7 +403,9 @@ public class ProductServiceTest {
                         updateProduct.getId(),
                         updateProduct.getName(),
                         updateProduct.getPrice(),
-                        updateProduct.getDescription()
+                        updateProduct.getDescription(),
+                        updateProduct.getCreatedAt(),
+                        updateProduct.getUpdatedAt()
                 )
         );
 
@@ -388,7 +428,7 @@ public class ProductServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(updateProduct);
 
-        logger.info("Unit Test: Error Update Product By Id");
+        logger.warn("Unit Test: Error Update Product By Id");
     }
 
     @Test
@@ -411,6 +451,8 @@ public class ProductServiceTest {
         updateProduct.setName(dto.name());
         updateProduct.setDescription(dto.description());
         updateProduct.setPrice(dto.price());
+        updateProduct.setCreatedAt(Date.from(Instant.now()));
+        updateProduct.setUpdatedAt(Date.from(Instant.now()));
 
         Mockito.when(repository.findByName(productName)).thenReturn(Optional.of(product));
         Mockito.when(repository.save(product)).thenReturn(updateProduct);
@@ -419,7 +461,9 @@ public class ProductServiceTest {
                         updateProduct.getId(),
                         updateProduct.getName(),
                         updateProduct.getPrice(),
-                        updateProduct.getDescription()
+                        updateProduct.getDescription(),
+                        updateProduct.getCreatedAt(),
+                        updateProduct.getUpdatedAt()
                 )
         );
 
@@ -430,6 +474,8 @@ public class ProductServiceTest {
         Assertions.assertEquals(expected.id(), updateProduct.getId());
         Assertions.assertEquals(expected.description(), updateProduct.getDescription());
         Assertions.assertEquals(expected.price(), updateProduct.getPrice());
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -464,6 +510,8 @@ public class ProductServiceTest {
         updateProduct.setName(dto.name());
         updateProduct.setDescription(dto.description());
         updateProduct.setPrice(dto.price());
+        updateProduct.setCreatedAt(Date.from(Instant.now()));
+        updateProduct.setUpdatedAt(Date.from(Instant.now()));
 
         Mockito.when(repository.findByName(productName))
                 .thenThrow(new IllegalArgumentException("cannot find product by name: " + productName));
@@ -473,7 +521,9 @@ public class ProductServiceTest {
                         updateProduct.getId(),
                         updateProduct.getName(),
                         updateProduct.getPrice(),
-                        updateProduct.getDescription()
+                        updateProduct.getDescription(),
+                        updateProduct.getCreatedAt(),
+                        updateProduct.getUpdatedAt()
                 )
         );
 
@@ -496,6 +546,6 @@ public class ProductServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toProductResponseDto(updateProduct);
 
-        logger.info("Unit Test: Error Update Product By Name");
+        logger.warn("Unit Test: Error Update Product By Name");
     }
 }

@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +63,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+        );
 
         Mockito.when(mapper.toCustomer(dto)).thenReturn(customer);
         Mockito.when(repository.save(customer)).thenReturn(save);
@@ -74,6 +79,8 @@ public class CustomerServiceTest {
         Assertions.assertEquals(expected.name(), "Amman");
         Assertions.assertEquals(expected.email(), "amman@example.com");
         Assertions.assertEquals(expected.phone(), "123456789");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(mapper, Mockito.times(1))
@@ -104,7 +111,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+        );
 
         Mockito.when(repository.findAll())
                 .thenReturn(customers);
@@ -141,7 +151,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findById(customerId))
                 .thenReturn(Optional.of(customer));
@@ -155,6 +168,8 @@ public class CustomerServiceTest {
         Assertions.assertEquals(expected.name(), "Amman");
         Assertions.assertEquals(expected.email(), "amman@example.com");
         Assertions.assertEquals(expected.phone(), "123456789");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -181,7 +196,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findById(customerId))
                 .thenThrow(new IllegalArgumentException("cannot find customer by id: " + customerId));
@@ -207,7 +225,7 @@ public class CustomerServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toCustomerResponseDto(customer);
 
-        logger.info("Unit Test: Error Find Customer By Id");
+        logger.warn("Unit Test: Error Find Customer By Id");
     }
 
     @Test
@@ -225,7 +243,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+        );
 
         Mockito.when(repository.findByEmail(customerEmail))
                 .thenReturn(Optional.of(customer));
@@ -239,6 +260,8 @@ public class CustomerServiceTest {
         Assertions.assertEquals(expected.name(), "Amman");
         Assertions.assertEquals(expected.email(), "amman@example.com");
         Assertions.assertEquals(expected.phone(), "123456789");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito
                 .verify(repository, Mockito.times(1))
@@ -265,7 +288,10 @@ public class CustomerServiceTest {
                 1L,
                 "Amman",
                 "amman@example.com",
-                "123456789");
+                "123456789",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findByEmail(customerEmail))
                 .thenThrow(new IllegalArgumentException("cannot find customer by email: " + customerEmail));
@@ -289,7 +315,7 @@ public class CustomerServiceTest {
                 .verify(mapper, Mockito.times(0))
                 .toCustomerResponseDto(customer);
 
-        logger.info("Unit Test: Error Find Customer By Email");
+        logger.warn("Unit Test: Error Find Customer By Email");
     }
 
     @Test
@@ -320,7 +346,10 @@ public class CustomerServiceTest {
                 1L,
                 "AmmanRizwan",
                 "ammanrizwan@example.com",
-                "789456123");
+                "789456123",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findById(customerId))
                 .thenReturn(Optional.of(customer));
@@ -336,6 +365,8 @@ public class CustomerServiceTest {
         Assertions.assertEquals(expected.name(), "AmmanRizwan");
         Assertions.assertEquals(expected.email(), "ammanrizwan@example.com");
         Assertions.assertEquals(expected.phone(), "789456123");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito.verify(repository, Mockito.times(1))
                 .findById(customerId);
@@ -375,7 +406,10 @@ public class CustomerServiceTest {
                 1L,
                 "AmmanRizwan",
                 "ammanrizwan@example.com",
-                "789456123");
+                "789456123",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findById(customerId))
                 .thenThrow(new IllegalArgumentException("cannot find customer by id: " + customerId));
@@ -401,7 +435,7 @@ public class CustomerServiceTest {
         Mockito.verify(mapper, Mockito.times(0))
                 .toCustomerResponseDto(update);
 
-        logger.info("Unit Test: Error Update Customer By Id");
+        logger.warn("Unit Test: Error Update Customer By Id");
     }
 
     @Test
@@ -432,7 +466,10 @@ public class CustomerServiceTest {
                 1L,
                 "AmmanRizwan",
                 "ammanrizwan@example.com",
-                "789456123");
+                "789456123",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findByEmail(customerEmail))
                 .thenReturn(Optional.of(customer));
@@ -448,6 +485,8 @@ public class CustomerServiceTest {
         Assertions.assertEquals(expected.name(), "AmmanRizwan");
         Assertions.assertEquals(expected.email(), "ammanrizwan@example.com");
         Assertions.assertEquals(expected.phone(), "789456123");
+        Assertions.assertNotNull(expected.createdAt());
+        Assertions.assertNotNull(expected.updatedAt());
 
         Mockito.verify(repository, Mockito.times(1))
                 .findByEmail(customerEmail);
@@ -487,7 +526,10 @@ public class CustomerServiceTest {
                 1L,
                 "AmmanRizwan",
                 "ammanrizwan@example.com",
-                "789456123");
+                "789456123",
+                Date.from(Instant.now()),
+                Date.from(Instant.now())
+                );
 
         Mockito.when(repository.findByEmail(customerEmail))
                 .thenThrow(new IllegalArgumentException("cannot find customer by id: " + customerEmail));
@@ -513,6 +555,6 @@ public class CustomerServiceTest {
         Mockito.verify(mapper, Mockito.times(0))
                 .toCustomerResponseDto(update);
 
-        logger.info("Unit Test: Error Update Customer By Email");
+        logger.warn("Unit Test: Error Update Customer By Email");
     }
 }

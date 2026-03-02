@@ -34,7 +34,9 @@ public class CustomerMapper {
                 customer.getId(),
                 customer.getName(),
                 customer.getEmail(),
-                customer.getPhone()
+                customer.getPhone(),
+                customer.getCreatedAt(),
+                customer.getUpdatedAt()
         );
     }
 }
