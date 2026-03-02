@@ -6,17 +6,32 @@
 
 ### Built With
 
+* [![Spring Boot][Spring-badge]][Spring-url]
 * [![Java][Java-badge]][Java-url]
-*  [![Maven][Maven-badge]][Maven-url]
-*  [![Spring Boot][Spring-badge]][Spring-url]
+* [![Maven][Maven-badge]][Maven-url]
+* [![Docker][Docker-badge]][Docker-url]
+* [![Mockito][Mockito-badge]][Mockito-url]
+* [![JUnit5][JUnit5-badge]][JUnit5-url]
+* [![PostgreSQL][Postgres-badge]][Postgres-url]
+* [![H2 Database][H2-badge]][H2-url]
 
 <!-- MARKDOWN LINK & IMAGES -->
+[Spring-badge]: https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white
+[Spring-url]: https://spring.io/projects/spring-boot
 [Java-badge]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
 [Java-url]: https://www.oracle.com/java/
 [Maven-badge]: https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white
 [Maven-url]: https://maven.apache.org/
-[Spring-badge]: https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white
-[Spring-url]: https://spring.io/projects/spring-boot
+[Docker-badge]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
+[Mockito-badge]: https://img.shields.io/badge/Mockito-78A3AD?style=for-the-badge&logo=mockito&logoColor=white
+[Mockito-url]: https://site.mockito.org/
+[JUnit5-badge]: https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white
+[JUnit5-url]: https://junit.org/junit5/
+[Postgres-badge]: https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white
+[Postgres-url]: https://www.postgresql.org/
+[H2-badge]: https://img.shields.io/badge/H2%20Database-004B8D?style=for-the-badge&logo=databricks&logoColor=white
+[H2-url]: http://www.h2database.com/
 
 ## Getting Started
 
